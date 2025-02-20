@@ -14,7 +14,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             overflow: hidden;
-            background-color: white; /* Ensure background is white for better transparency handling */
+            background-color: white;
         }
         #image {
             max-width: 33.33vw; /* 1/3 of the viewport width */
@@ -118,10 +118,14 @@
         image.addEventListener('touchend', () => {
             clearInterval(touchInterval);
         });
+
+        // Prevent default behavior for touch events to avoid issues with long press
+        image.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
     </script>
 </body>
 </html>
-
 
 
 
