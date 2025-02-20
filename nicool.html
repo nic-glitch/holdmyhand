@@ -13,11 +13,17 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            font-size: 48px;
             overflow: hidden;
         }
-        .highlight {
-            color: lightblue;
+        #image {
+            max-width: 33.33vw; /* 1/3 of the viewport width */
+            max-height: 33.33vh; /* 1/3 of the viewport height */
+            width: auto;
+            height: auto;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version */
         }
         .heart {
             position: absolute;
@@ -39,59 +45,30 @@
     </style>
 </head>
 <body>
-    <div id="text">mano de nicool</div>
-<script>
-    const text = document.getElementById('text');
+    <img id="image" src="images/manodenicool.jpg" alt="Mano de Nicool">
+    <script>
+        const image = document.getElementById('image');
 
-    // Function to handle highlighting on hover or touch
-    const handleHighlight = (add) => {
-        if (add) {
-            text.classList.add('highlight');
-        } else {
-            text.classList.remove('highlight');
-        }
-    };
-
-    // Function to create and animate hearts
-    const createHeart = () => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.innerText = '❤️';
-        heart.style.left = `${Math.random() * 100}vw`;
-        document.body.appendChild(heart);
-        setTimeout(() => {
-            heart.remove();
-        }, 3000);
-    };
-
-    // Mouse events
-    text.addEventListener('mouseover', () => handleHighlight(true));
-    text.addEventListener('mouseout', () => handleHighlight(false));
-
-    let mouseInterval;
-    text.addEventListener('mousedown', () => {
-        mouseInterval = setInterval(createHeart, 100);
-    });
-
-    text.addEventListener('mouseup', () => {
-        clearInterval(mouseInterval);
-        document.querySelectorAll('.heart').forEach(heart => {
-            heart.style.animation = 'none';
-            heart.style.opacity = '0';
+        // Function to create and animate hearts
+        const createHeart = () => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerText = '❤️';
+            heart.style.left = `${Math.random() * 100}vw`;
+            document.body.appendChild(heart);
             setTimeout(() => {
                 heart.remove();
-            }, 1000);
+            }, 3000);
+        };
+
+        // Mouse events
+        let mouseInterval;
+        image.addEventListener('mousedown', () => {
+            mouseInterval = setInterval(createHeart, 100);
         });
-    });
 
-    // Touch events
-    text.addEventListener('touchstart', () => {
-        handleHighlight(true);
-        const touchInterval = setInterval(createHeart, 100);
-
-        const handleTouchEnd = () => {
-            clearInterval(touchInterval);
-            handleHighlight(false);
+        image.addEventListener('mouseup', () => {
+            clearInterval(mouseInterval);
             document.querySelectorAll('.heart').forEach(heart => {
                 heart.style.animation = 'none';
                 heart.style.opacity = '0';
@@ -99,12 +76,30 @@
                     heart.remove();
                 }, 1000);
             });
-            text.removeEventListener('touchend', handleTouchEnd);
-        };
+        });
 
-        text.addEventListener('touchend', handleTouchEnd);
-    });
-</script>
+        // Touch events
+        image.addEventListener('touchstart', () => {
+            const touchInterval = setInterval(createHeart, 100);
+
+            const handleTouchEnd = () => {
+                clearInterval(touchInterval);
+                document.querySelectorAll('.heart').forEach(heart => {
+                    heart.style.animation = 'none';
+                    heart.style.opacity = '0';
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 1000);
+                });
+                image.removeEventListener('touchend', handleTouchEnd);
+            };
+
+            image.addEventListener('touchend', handleTouchEnd);
+        });
+    </script>
+</body>
+</html>
+
 
 </body>
 </html>
