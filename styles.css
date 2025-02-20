@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.word {
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+    position: relative;
+    padding: 10px;
+}
+
+.word::before,
+.word::after {
+    content: '🦋';
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.word::before {
+    left: -20px;
+}
+
+.word::after {
+    right: -20px;
+}
+
+.word:hover::before,
+.word:hover::after {
+    opacity: 1;
+}
