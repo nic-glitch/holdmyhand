@@ -58,7 +58,18 @@
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.innerText = '❤️';
-            heart.style.left = `${Math.random() * 100}vw`;
+
+            // Get image position and dimensions
+            const rect = image.getBoundingClientRect();
+            const imageCenterX = rect.left + rect.width / 2;
+            const imageCenterY = rect.top + rect.height / 2;
+
+            // Calculate random position around the center
+            const offsetX = (Math.random() - 0.5) * rect.width * 0.5;
+            const offsetY = (Math.random() - 0.5) * rect.height * 0.5;
+            heart.style.left = `calc(${imageCenterX + offsetX}px - 12px)`; // Adjust for heart size
+            heart.style.top = `${imageCenterY + offsetY}px`;
+
             document.body.appendChild(heart);
             setTimeout(() => {
                 heart.remove();
