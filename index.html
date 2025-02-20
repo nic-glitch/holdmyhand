@@ -33,10 +33,10 @@
             transition: opacity 0.3s;
         }
         .word::before {
-            left: -40px; /* Original position for desktop */
+            left: -40px; /* Position for desktop */
         }
         .word::after {
-            right: -40px; /* Original position for desktop */
+            right: -40px; /* Position for desktop */
         }
         .word:hover::before,
         .word:hover::after {
@@ -52,11 +52,13 @@
                 font-size: 36px; /* Adjust font size for mobile */
                 padding: 8px; /* Adjust padding for better fit */
             }
-            .word::before,
-            .word::after {
-                font-size: 24px; /* Adjust butterfly size for mobile */
+            .word::before {
                 left: -20px; /* Adjusted position for mobile */
+                font-size: 24px; /* Adjust butterfly size for mobile */
+            }
+            .word::after {
                 right: -20px; /* Adjusted position for mobile */
+                font-size: 24px; /* Adjust butterfly size for mobile */
             }
         }
     </style>
@@ -68,6 +70,7 @@
     </div>
 </body>
 </html>
+
 
 
 
