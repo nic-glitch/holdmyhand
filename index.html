@@ -33,10 +33,10 @@
             transition: opacity 0.3s;
         }
         .word::before {
-            left: -40px;
+            left: -20px; /* Position for desktop */
         }
         .word::after {
-            right: -40px;
+            right: -20px; /* Position for desktop */
         }
         .word:hover::before,
         .word:hover::after {
@@ -55,6 +55,8 @@
             .word::before,
             .word::after {
                 font-size: 24px; /* Adjust butterfly size for mobile */
+                left: -10px; /* Adjusted position for mobile */
+                right: -10px; /* Adjusted position for mobile */
             }
         }
     </style>
@@ -67,5 +69,4 @@
 </body>
 </html>
 
-    </style>
 
