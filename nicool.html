@@ -31,10 +31,7 @@
             color: lightblue;
             font-size: 24px;
             opacity: 0;
-            animation: floatUp 3s ease-in-out forwards; /* Original duration */
-        }
-        .heart.fade-out {
-            animation: fadeOut 5s ease-in-out forwards; /* Slow fade-out */
+            animation: floatUp 3s ease-in-out forwards, fadeOut 5s ease-in-out 3s forwards;
         }
         @keyframes floatUp {
             0% {
@@ -67,16 +64,30 @@
             heart.className = 'heart';
             heart.innerText = '❤️';
 
-            // Calculate random position on the screen
-            const randomX = Math.random() * window.innerWidth;
-            const randomY = Math.random() * window.innerHeight;
-            heart.style.left = `${randomX}px`;
-            heart.style.top = `${randomY}px`;
+            // Get image position and dimensions
+            const rect = image.getBoundingClientRect();
+            const imageCenterX = rect.left + rect.width / 2;
+            const imageCenterY = rect.top + rect.height / 2;
+
+            // Determine position: 60% around center, 40% random on screen
+            if (Math.random() < 0.6) {
+                // Around the center
+                const offsetX = (Math.random() - 0.5) * rect.width * 0.5;
+                const offsetY = (Math.random() - 0.5) * rect.height * 0.5;
+                heart.style.left = `calc(${imageCenterX + offsetX}px - 12px)`; // Adjust for heart size
+                heart.style.top = `${imageCenterY + offsetY}px`;
+            } else {
+                // Random on screen
+                const randomX = Math.random() * window.innerWidth;
+                const randomY = Math.random() * window.innerHeight;
+                heart.style.left = `${randomX}px`;
+                heart.style.top = `${randomY}px`;
+            }
 
             document.body.appendChild(heart);
             setTimeout(() => {
                 heart.remove();
-            }, 3000); /* Match the animation duration */
+            }, 8000); /* Match the total animation duration */
         };
 
         // Mouse events
@@ -87,13 +98,6 @@
 
         image.addEventListener('mouseup', () => {
             clearInterval(mouseInterval);
-            const hearts = document.querySelectorAll('.heart');
-            hearts.forEach(heart => {
-                heart.classList.add('fade-out');
-                setTimeout(() => {
-                    heart.remove();
-                }, 5000); /* Match the fade-out duration */
-            });
         });
 
         // Touch events
@@ -102,13 +106,6 @@
 
             const handleTouchEnd = () => {
                 clearInterval(touchInterval);
-                const hearts = document.querySelectorAll('.heart');
-                hearts.forEach(heart => {
-                    heart.classList.add('fade-out');
-                    setTimeout(() => {
-                        heart.remove();
-                    }, 5000); /* Match the fade-out duration */
-                });
                 image.removeEventListener('touchend', handleTouchEnd);
             };
 
