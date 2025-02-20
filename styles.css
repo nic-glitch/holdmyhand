@@ -9,13 +9,13 @@ body {
 
 .container {
     display: flex;
-    gap: 20px;
+    gap: 40px; /* Increased gap for better spacing */
 }
 
 .word {
     text-decoration: none;
     color: black;
-    font-size: 24px;
+    font-size: 36px; /* Increased font size */
     position: relative;
     padding: 10px;
 }
@@ -29,14 +29,15 @@ body {
 }
 
 .word::before {
-    left: -20px;
+    left: -30px; /* Adjusted position */
 }
 
 .word::after {
-    right: -20px;
+    right: -30px; /* Adjusted position */
 }
 
 .word:hover::before,
 .word:hover::after {
     opacity: 1;
 }
+
