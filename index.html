@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>holdmyhand</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            gap: 60px; /* Default gap for desktop */
+        }
+        .word {
+            text-decoration: none;
+            color: black;
+            font-size: 48px;
+            position: relative;
+            padding: 10px;
+        }
+        .word::before,
+        .word::after {
+            content: '🦋';
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .word::before {
+            left: -40px;
+        }
+        .word::after {
+            right: -40px;
+        }
+        .word:hover::before,
+        .word:hover::after {
+            opacity: 1;
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px; /* Reduced gap for mobile */
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
