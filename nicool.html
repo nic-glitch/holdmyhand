@@ -108,21 +108,20 @@
         });
 
         // Touch events
+        let touchInterval;
         image.addEventListener('touchstart', () => {
-            const touchInterval = setInterval(createHeart, 50); // Increase frequency
+            touchInterval = setInterval(createHeart, 50); // Increase frequency
+        });
 
-            const handleTouchEnd = () => {
-                clearInterval(touchInterval);
-                const hearts = document.querySelectorAll('.heart');
-                hearts.forEach(heart => {
-                    heart.classList.add('fade-out');
-                });
-                image.removeEventListener('touchend', handleTouchEnd);
-            };
-
-            image.addEventListener('touchend', handleTouchEnd);
+        image.addEventListener('touchend', () => {
+            clearInterval(touchInterval);
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => {
+                heart.classList.add('fade-out');
+            });
         });
     </script>
 </body>
 </html>
+
 
