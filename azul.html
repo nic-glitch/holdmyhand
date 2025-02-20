@@ -14,10 +14,70 @@
             margin: 0;
             font-family: Arial, sans-serif;
             font-size: 48px;
+            overflow: hidden;
+        }
+        .highlight {
+            color: lightblue;
+        }
+        .heart {
+            position: absolute;
+            color: lightblue;
+            font-size: 24px;
+            opacity: 0;
+            animation: floatUp 3s ease-in-out forwards;
+        }
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(0.5);
+            }
         }
     </style>
 </head>
 <body>
-    mano de azul
+    <div id="text">mano de azul</div>
+    <script>
+        const text = document.getElementById('text');
+
+        text.addEventListener('mouseover', () => {
+            text.classList.add('highlight');
+        });
+
+        text.addEventListener('mouseout', () => {
+            text.classList.remove('highlight');
+        });
+
+        text.addEventListener('mousedown', () => {
+            const interval = setInterval(() => {
+                createHeart();
+            }, 100);
+
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerText = '❤️';
+                heart.style.left = `${Math.random() * 100}vw`;
+                document.body.appendChild(heart);
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+
+            text.addEventListener('mouseup', () => {
+                clearInterval(interval);
+                document.querySelectorAll('.heart').forEach(heart => {
+                    heart.style.animation = 'none';
+                    heart.style.opacity = '0';
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 1000);
+                });
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>
