@@ -31,19 +31,14 @@
             position: absolute;
             color: lightblue;
             font-size: 24px;
-            opacity: 0;
-            animation: floatUp 3s ease-in-out forwards; /* Original duration */
-        }
-        .heart.fade-out {
-            animation: fadeOut 5s ease-in-out forwards; /* Slow fade-out */
+            opacity: 1;
+            animation: floatUp 3s ease-in-out forwards, fadeOut 5s ease-in-out 3s forwards;
         }
         @keyframes floatUp {
             0% {
-                opacity: 1;
                 transform: translateY(0) scale(1);
             }
             100% {
-                opacity: 0;
                 transform: translateY(-100vh) scale(0.5);
             }
         }
@@ -111,10 +106,6 @@
 
         image.addEventListener('mouseup', () => {
             clearInterval(mouseInterval);
-            const hearts = document.querySelectorAll('.heart');
-            hearts.forEach(heart => {
-                heart.classList.add('fade-out');
-            });
         });
 
         // Touch events
@@ -126,10 +117,6 @@
 
         image.addEventListener('touchend', () => {
             clearInterval(touchInterval);
-            const hearts = document.querySelectorAll('.heart');
-            hearts.forEach(heart => {
-                heart.classList.add('fade-out');
-            });
         });
     </script>
 </body>
