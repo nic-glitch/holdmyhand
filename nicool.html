@@ -26,6 +26,7 @@
             -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version */
             cursor: pointer; /* Changes cursor to a hand */
+            -webkit-touch-callout: none; /* Prevent callout on touch */
         }
         .heart {
             position: absolute;
@@ -110,7 +111,8 @@
 
         // Touch events
         let touchInterval;
-        image.addEventListener('touchstart', () => {
+        image.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent default touch behavior
             resetHearts();
             touchInterval = setInterval(createHeart, 50); // Increase frequency
         });
@@ -126,6 +128,7 @@
     </script>
 </body>
 </html>
+
 
 
 
