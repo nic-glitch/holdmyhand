@@ -34,7 +34,7 @@
             animation: floatUp 3s ease-in-out forwards; /* Original duration */
         }
         .heart.fade-out {
-            animation: fadeOut 5s ease-in-out 3s forwards; /* Slow fade-out after floatUp */
+            animation: fadeOut 5s ease-in-out forwards; /* Slow fade-out */
         }
         @keyframes floatUp {
             0% {
@@ -93,9 +93,18 @@
             }, 8000); /* Match the total animation duration */
         };
 
+        // Function to reset hearts
+        const resetHearts = () => {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => {
+                heart.remove();
+            });
+        };
+
         // Mouse events
         let mouseInterval;
         image.addEventListener('mousedown', () => {
+            resetHearts();
             mouseInterval = setInterval(createHeart, 50); // Increase frequency
         });
 
@@ -110,6 +119,7 @@
         // Touch events
         let touchInterval;
         image.addEventListener('touchstart', () => {
+            resetHearts();
             touchInterval = setInterval(createHeart, 50); // Increase frequency
         });
 
@@ -123,6 +133,7 @@
     </script>
 </body>
 </html>
+
 
 
 
