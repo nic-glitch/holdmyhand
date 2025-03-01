@@ -13,98 +13,122 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            font-size: 48px;
             overflow: hidden;
+            background-color: white;
         }
-        .highlight {
-            color: lightblue;
+        #image {
+            max-width: 33.33vw; /* 1/3 of the viewport width */
+            max-height: 33.33vh; /* 1/3 of the viewport height */
+            width: auto;
+            height: auto;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version */
+            cursor: pointer; /* Changes cursor to a hand */
+            -webkit-touch-callout: none; /* Prevent callout on touch */
         }
         .heart {
             position: absolute;
             color: lightblue;
             font-size: 24px;
-            opacity: 0;
-            animation: floatUp 3s ease-in-out forwards;
+            opacity: 1;
+            animation: floatUp 3s ease-in-out forwards, fadeOut 5s ease-in-out 3s forwards;
         }
         @keyframes floatUp {
             0% {
-                opacity: 1;
                 transform: translateY(0) scale(1);
             }
             100% {
-                opacity: 0;
                 transform: translateY(-100vh) scale(0.5);
+            }
+        }
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div id="text">mano de azul</div>
-<script>
-    const text = document.getElementById('text');
+    <img id="image" src="images/manodeazul.png" alt="Mano de Azul">
+    <script>
+        const image = document.getElementById('image');
 
-    // Function to handle highlighting on hover or touch
-    const handleHighlight = (add) => {
-        if (add) {
-            text.classList.add('highlight');
-        } else {
-            text.classList.remove('highlight');
-        }
-    };
+        // Function to create and animate hearts
+        const createHeart = () => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerText = '❤️';
 
-    // Function to create and animate hearts
-    const createHeart = () => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.innerText = '❤️';
-        heart.style.left = `${Math.random() * 100}vw`;
-        document.body.appendChild(heart);
-        setTimeout(() => {
-            heart.remove();
-        }, 3000);
-    };
+            // Get image position and dimensions
+            const rect = image.getBoundingClientRect();
+            const imageCenterX = rect.left + rect.width / 2;
+            const imageCenterY = rect.top + rect.height / 2;
 
-    // Mouse events
-    text.addEventListener('mouseover', () => handleHighlight(true));
-    text.addEventListener('mouseout', () => handleHighlight(false));
+            // Determine position: 60% around center, 40% random on screen
+            if (Math.random() < 0.6) {
+                // Around the center
+                const offsetX = (Math.random() - 0.5) * rect.width * 0.5;
+                const offsetY = (Math.random() - 0.5) * rect.height * 0.5;
+                heart.style.left = `calc(${imageCenterX + offsetX}px - 12px)`; // Adjust for heart size
+                heart.style.top = `${imageCenterY + offsetY}px`;
+            } else {
+                // Random on screen
+                const randomX = Math.random() * window.innerWidth;
+                const randomY = Math.random() * window.innerHeight;
+                heart.style.left = `${randomX}px`;
+                heart.style.top = `${randomY}px`;
+            }
 
-    let mouseInterval;
-    text.addEventListener('mousedown', () => {
-        mouseInterval = setInterval(createHeart, 100);
-    });
-
-    text.addEventListener('mouseup', () => {
-        clearInterval(mouseInterval);
-        document.querySelectorAll('.heart').forEach(heart => {
-            heart.style.animation = 'none';
-            heart.style.opacity = '0';
+            document.body.appendChild(heart);
             setTimeout(() => {
                 heart.remove();
-            }, 1000);
-        });
-    });
-
-    // Touch events
-    text.addEventListener('touchstart', () => {
-        handleHighlight(true);
-        const touchInterval = setInterval(createHeart, 100);
-
-        const handleTouchEnd = () => {
-            clearInterval(touchInterval);
-            handleHighlight(false);
-            document.querySelectorAll('.heart').forEach(heart => {
-                heart.style.animation = 'none';
-                heart.style.opacity = '0';
-                setTimeout(() => {
-                    heart.remove();
-                }, 1000);
-            });
-            text.removeEventListener('touchend', handleTouchEnd);
+            }, 8000); /* Match the total animation duration */
         };
 
-        text.addEventListener('touchend', handleTouchEnd);
-    });
-</script>
+        // Function to reset hearts
+        const resetHearts = () => {
+            const hearts = document.querySelectorAll('.heart');
+            hearts.forEach(heart => {
+                heart.remove();
+            });
+        };
+
+        // Mouse events
+        let mouseInterval;
+        image.addEventListener('mousedown', () => {
+            resetHearts();
+            mouseInterval = setInterval(createHeart, 50); // Increase frequency
+        });
+
+        image.addEventListener('mouseup', () => {
+            clearInterval(mouseInterval);
+        });
+
+        // Touch events
+        let touchInterval;
+        image.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent default touch behavior
+            resetHearts();
+            touchInterval = setInterval(createHeart, 50); // Increase frequency
+        });
+
+        image.addEventListener('touchend', () => {
+            clearInterval(touchInterval);
+        });
+
+        // Prevent default behavior for touch events to avoid issues with long press
+        image.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
+
 
 </body>
 </html>
